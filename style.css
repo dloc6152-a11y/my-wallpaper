@@ -1,0 +1,41 @@
+/* 3. MẶT NƯỚC - Kết hợp lớp phủ và sóng chuyển động */
+.water-layer {
+    position: fixed; /* Thay absolute bằng fixed để cố định ở đáy màn hình */
+    bottom: 0;
+    width: 100%;
+    height: 25vh; /* Chỉ chiếm 25% chiều cao màn hình phía dưới */
+    background: linear-gradient(to bottom, transparent, rgba(0, 100, 200, 0.2));
+    z-index: 3;
+    overflow: hidden; /* Quan trọng: Để sóng không tràn ra ngoài layer này */
+    pointer-events: none;
+}
+
+.water-wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 200%; /* Giữ nguyên để tạo vòng lặp */
+    height: 100%; 
+    background: url('https://www.transparenttextures.com/patterns/water.png');
+    background-repeat: repeat-x; /* Lặp lại theo chiều ngang */
+    opacity: 0.3;
+    animation: wave-move 8s linear infinite; /* Chỉnh lại thời gian cho mượt */
+}
+
+/* Tạo thêm một lớp sóng thứ 2 ngược chiều để tạo độ sâu */
+.water-wave-overlay {
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 200%;
+    height: 80%;
+    background: url('https://www.transparenttextures.com/patterns/water.png');
+    background-repeat: repeat-x;
+    opacity: 0.15;
+    animation: wave-move 12s linear infinite reverse; /* Chạy ngược lại */
+}
+
+@keyframes wave-move {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
