@@ -1,0 +1,108 @@
+/* Thiết lập khung chứa sao để không bị tràn màn hình */
+.star-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+.shooting-star {
+    position: absolute;
+    top: -10%; /* Bắt đầu phía trên màn hình */
+    width: 4px; /* Mảnh hơn sẽ tinh tế hơn */
+    height: 150px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
+    opacity: 0;
+    /* Góc xoay 35 độ để rơi chéo từ phải sang trái */
+    transform: rotate(35deg); 
+    animation: star-fall 4s infinite linear;
+}
+
+/* Chia vị trí dàn trải và độ trễ ngẫu nhiên */
+.shooting-star:nth-child(1) { left: 80%; animation-delay: 0s; animation-duration: 3s; }
+.shooting-star:nth-child(2) { left: 40%; animation-delay: 1.2s; animation-duration: 5s; }
+.shooting-star:nth-child(3) { left: 60%; animation-delay: 2.5s; animation-duration: 4s; }
+.shooting-star:nth-child(4) { left: 95%; animation-delay: 4s; animation-duration: 3.5s; }
+.shooting-star:nth-child(5) { left: 20%; animation-delay: 5.5s; animation-duration: 6s; }
+
+/* Hiệu ứng rơi: Tự nhiên hơn bằng cách kết hợp mờ dần */
+@keyframes star-fall {
+    0% {
+        transform: translateY(0) translateX(0) rotate(35deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1; /* Hiện ra nhanh */
+    }
+    30% {
+        /* Di chuyển một đoạn ngắn rồi bắt đầu mờ dần */
+        transform: translateY(30vh) translateX(-15vh) rotate(35deg);
+        opacity: 1;
+    }
+    60% {
+        /* Biến mất trước khi chạm đáy để trông tự nhiên */
+        transform: translateY(60vh) translateX(-30vh) rotate(35deg);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(100vh) translateX(-50vh) rotate(35deg);
+        opacity: 0;
+    }
+}
+#bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;    /* Phải có chiều rộng 100% màn hình */
+    height: 100vh;   /* Phải có chiều cao 100% màn hình */
+    object-fit: cover; /* Để video phủ kín màn hình không bị méo */
+    z-index: 0;
+
+}
+.butterfly {
+    font-size: 14px;
+    /* Opacity tối đa là 1 để rõ nét nhất */
+    filter: brightness(0) invert(1) opacity(1) drop-shadow(0 0 5px white);
+    display: inline-block;
+    /* CHỈNH Ở ĐÂY: Tăng lên 0.4s để cánh đập chậm và thư thái hơn */
+    animation: flutter 0.4s infinite alternate ease-in-out;
+}
+
+.butterfly-container {
+    position: fixed;
+    z-index: 1000;
+    pointer-events: none;
+    opacity: 0;
+    animation: misty-fly 15s linear infinite;
+}
+
+/* Dải đều vị trí và thời gian xuất hiện cho 8 con */
+.butterfly-container:nth-child(1) { left: 5%;  bottom: 5vh;  animation-delay: 0s; }
+.butterfly-container:nth-child(2) { left: 20%; bottom: 10vh; animation-delay: 3s; }
+.butterfly-container:nth-child(3) { left: 35%; bottom: 2vh;  animation-delay: 7s; }
+.butterfly-container:nth-child(4) { left: 50%; bottom: 15vh; animation-delay: 11s; }
+.butterfly-container:nth-child(5) { left: 65%; bottom: 7vh;  animation-delay: 2s; }
+.butterfly-container:nth-child(6) { left: 80%; bottom: 12vh; animation-delay: 5s; }
+.butterfly-container:nth-child(7) { left: 15%; bottom: 18vh; animation-delay: 9s; }
+.butterfly-container:nth-child(8) { left: 75%; bottom: 4vh;  animation-delay: 14s; }
+
+@keyframes misty-fly {
+    0% { opacity: 0; transform: translateY(0); }
+    15% { opacity: 1; } /* Hiện rõ hoàn toàn */
+    45% { transform: translateY(-25vh) translateX(5vw); }
+    /* Biến mất ở khoảng giữa màn hình để tránh chạm sao băng */
+    70% { opacity: 1; }
+    100% {
+        opacity: 0;
+        transform: translateY(-50vh) translateX(10vw);
+    }
+}
+
+@keyframes flutter {
+    from { transform: scaleX(1); }
+    to { transform: scaleX(0.3); }
+}
